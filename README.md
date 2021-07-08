@@ -1,2 +1,11 @@
 # embed-viewer
-This tool is used for view `.xmind` file in Github Page
+
+This tool is used for viewing `.xmind` file on GitHub Page
+
+
+# Simple Usage
+
+```shell
+cd $project
+viewer -i . -o ./docs
+```
