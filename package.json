@@ -1,0 +1,41 @@
+{
+  "name": "embed-viewer",
+  "version": "1.0.10",
+  "description": "This tool is used for viewing `.xmind` file on Github Page.",
+  "main": "dist/index.js",
+  "bin": {
+    "viewer": "dist/bin/viewer.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "node_modules/.bin/eslint . --fix --ext .ts",
+    "build": "rm -rf ./dist && tsc -p . && cp -rp src/templates dist/templates"
+  },
+  "devDependencies": {
+    "@types/node": "^16.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2",
+    "eslint": "^7.30.0",
+    "typescript": "^4.3.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielsss/embed-viewer.git"
+  },
+  "keywords": [
+    "xmind-viewer",
+    "xmind-embed-viewer",
+    "embed-viewer"
+  ],
+  "bugs": {
+    "url": "https://github.com/danielsss/embed-viewer/issues"
+  },
+  "homepage": "https://github.com/danielsss/embed-viewer#readme",
+  "author": "danielsss",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^8.0.0",
+    "debug": "^4.3.2",
+    "handlebars": "^4.7.7"
+  }
+}
