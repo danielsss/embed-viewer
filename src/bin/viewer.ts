@@ -44,5 +44,7 @@ const target = path.resolve(options.output);
 
 const input = new Input({ source });
 const output = new Output({ source, target, files: input.files });
-output.compile();
-output.compileIndex(input.files);
+if (Array.isArray(input.files) && input.files.length > 0) {
+  output.compileIndex(input.files);
+  output.compile();
+}

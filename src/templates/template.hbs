@@ -5,6 +5,34 @@
     <title>{{title}}</title>
 </head>
 <body>
-
+    <div style="max-width: 1280px">
+        <div id="mount"></div>
+    </div>
 </body>
+<script src="./embed-viewer.js"></script>
+<script type="application/javascript">
+    const container = document.querySelector('#mount')
+    const contents = "{{{base64}}}";
+
+    const atab = function(base64String) {
+        const bs = window.atob(base64String);
+        const len = bs.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+            bytes[i] = bs.charCodeAt(i);
+        }
+
+        return bytes.buffer;
+    }
+
+    const viewer = new XMindEmbedViewer({
+        el: container,
+        file: atab(contents),
+        styles: {
+            'height': '500px',
+            'width': '100%'
+        }
+    });
+    window.viewer = viewer;
+</script>
 </html>
