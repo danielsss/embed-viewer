@@ -47,4 +47,5 @@ const output = new Output({ source, target, files: input.files });
 if (Array.isArray(input.files) && input.files.length > 0) {
   output.compileIndex(input.files);
   output.compile();
+  output.createScript();
 }

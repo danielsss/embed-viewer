@@ -6,6 +6,7 @@ import { OutputOptions } from './definitions';
 
 const PAGE_TEMPLATE = path.join(__dirname, './templates/template.hbs');
 const INDEX_TEMPLATE = path.join(__dirname, './templates/index.hbs');
+const SCRIPT_TEMPLATE = path.join(__dirname, './templates/embed-viewer.js');
 
 const TITLE = 'Embed Viewer';
 
@@ -43,6 +44,21 @@ class Output {
     const template = Handlebars.compile(fs.readFileSync(INDEX_TEMPLATE, 'utf-8'));
     const compiled = template({ title: TITLE, files: list || this.files });
     fs.writeFileSync(path.join(this.options.target, '/index.html'), compiled);
+  }
+
+  public createScript() {
+    const dest = path.join(this.target, '/embed-viewer.js');
+    if (fs.existsSync(dest)) {
+      debug('skip to create script %s', dest);
+      return null;
+    }
+    debug('prepare to create %s into destination %s', SCRIPT_TEMPLATE, dest);
+    fs.createReadStream(SCRIPT_TEMPLATE).pipe(fs.createWriteStream(dest))
+      .on('finish', () => debug('script %s created', dest))
+      .on('error', err => {
+        debug('creat script %s error', dest);
+        debug(err);
+      });
   }
 }
 
