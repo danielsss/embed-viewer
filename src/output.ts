@@ -2,6 +2,8 @@ import * as Handlebars from 'handlebars';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as Debug from 'debug';
+import * as utils from './utils';
+import * as _ from 'lodash';
 import { OutputOptions } from './definitions';
 
 const PAGE_TEMPLATE = path.join(__dirname, './templates/template.hbs');
@@ -25,6 +27,16 @@ class Output {
     this.target = options.target;
   }
 
+  public purge() {
+    debug('purge %s', this.target);
+    if (!fs.existsSync(this.target)) {
+      fs.mkdirSync(this.target);
+      return null;
+    }
+    fs.rmdirSync(this.target, { recursive: true });
+    fs.mkdirSync(this.target);
+  }
+
   public compile() {
     for (const file of this.files) {
       const template = Handlebars.compile(fs.readFileSync(PAGE_TEMPLATE, 'utf-8'));
@@ -42,7 +54,13 @@ class Output {
 
   public compileIndex(list?: string[]) {
     const template = Handlebars.compile(fs.readFileSync(INDEX_TEMPLATE, 'utf-8'));
-    const compiled = template({ title: TITLE, files: list || this.files });
+    const files = [];
+    for (const str of (list || this.files)) {
+      files.push(utils.resolvePathString(str));
+    }
+    const html = this.navigator(_.groupBy(files, file => file.dir.join('/')));
+    debug('navigator html string:', html);
+    const compiled = template({ title: TITLE, files: html });
     fs.writeFileSync(path.join(this.options.target, '/index.html'), compiled);
   }
 
@@ -59,6 +77,30 @@ class Output {
         debug('creat script %s error', dest);
         debug(err);
       });
+  }
+
+  protected navigator(groupInfo): string {
+    let html = '';
+
+    const keys = Object.keys(groupInfo);
+    const ul = ['<ul>', '</ul>'];
+    const li = ['<li>', '</li>']
+    for (const key of keys) {
+      html += ul[0];
+      html += `${li[0]}${key}${li[1]}`;
+      if (groupInfo[key].length > 0) {
+        html += ul[0];
+        for (const obj of groupInfo[key]) {
+          const href = obj.name.replace('.xmind', '.index');
+          const name = obj.name.split('.')[0];
+          html += `${li[0]}<a href="${href}">${name}</a>${li[1]}`;
+        }
+        html += ul[1];
+      }
+      html += ul[1];
+    }
+
+    return html;
   }
 }
 

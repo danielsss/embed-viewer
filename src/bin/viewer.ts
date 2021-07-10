@@ -45,6 +45,7 @@ const target = path.resolve(options.output);
 const input = new Input({ source });
 const output = new Output({ source, target, files: input.files });
 if (Array.isArray(input.files) && input.files.length > 0) {
+  output.purge();
   output.compileIndex(input.files);
   output.compile();
   output.createScript();
