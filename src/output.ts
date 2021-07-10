@@ -91,7 +91,7 @@ class Output {
       if (groupInfo[key].length > 0) {
         html += ul[0];
         for (const obj of groupInfo[key]) {
-          const href = obj.name.replace('.xmind', '.index');
+          const href = obj.name.replace('.xmind', '.html');
           const name = obj.name.split('.')[0];
           html += `${li[0]}<a href="${href}">${name}</a>${li[1]}`;
         }
