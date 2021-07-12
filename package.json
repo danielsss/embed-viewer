@@ -7,13 +7,14 @@
     "viewer": "dist/bin/viewer.js"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "nyc mocha",
     "lint": "node_modules/.bin/eslint . --fix --ext .ts",
     "build": "rm -rf ./dist && tsc -p . && cp -rp src/templates dist/templates",
     "link": "npm run build && npm link",
     "debug": "DEBUG=embed:* viewer -i . -o ./docs -p"
   },
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.21",
     "@types/mocha": "^8.2.3",
     "@types/node": "^16.3.1",
@@ -22,7 +23,9 @@
     "chai": "^4.3.4",
     "eslint": "^7.30.0",
     "mocha": "^9.0.2",
+    "nyc": "^15.1.0",
     "source-map-support": "^0.5.19",
+    "ts-node": "^10.1.0",
     "typescript": "^4.3.5"
   },
   "dependencies": {

@@ -41,6 +41,7 @@ class Input {
     const filtered = unfiltered.filter(dir => !this.options.excludes.includes(dir.name));
     for (const dirent of filtered) {
       if (this.options.nonStartsWithDot && dirent.name.startsWith('.')) {
+        debug('starts with dot %s', dirent.name);
         continue;
       }
       if (dirent.isDirectory()) {

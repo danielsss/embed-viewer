@@ -6,11 +6,23 @@ import * as fs from 'fs';
 describe('Input Unit Test', function () {
   it('initializing Input error', done => {
     try {
+      // @ts-ignore
       new Input();
     } catch (err) {
       expect(err).to.be.an('error');
       done();
     }
+  });
+
+  it('should skip folder which starts with a dot', done => {
+    const source = path.resolve('.')
+    const input = new Input({source, nonStartsWithDot: true, excludes: ['a', 'c']});
+    const files = input.getLoadedFiles();
+    expect(files).to.be.an('array');
+    for (const f of files) {
+      expect(!f.startsWith('.')).to.be.true;
+    }
+    done();
   });
 
   it('should return an instance of Input correctly and including all *.xmind files', done => {

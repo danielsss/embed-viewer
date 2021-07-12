@@ -53,13 +53,12 @@ const output = new Output({ source, target, files });
 
 if (Array.isArray(files) && files.length > 0) {
   try {
-    if (options.parge) {
+    if (options.purge) {
       output.purge();
     }
     output.compileIndex();
     output.compile();
-    output.createScript();
-    process.exit(0);
+    output.createScript(true);
   } catch (err) {
     debug('Occurs Unhandled Error');
     debug(err);
