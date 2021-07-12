@@ -1,6 +1,6 @@
 # embed-viewer
 
-The `embed-viewer` is used for viewing `.xmind` file on GitHub Page. 
+The `embed-viewer` is used for converting XMind file to html and viewing pages via GitHub.
 It will scan all `*.xmind` file from you project automatically.
 After that, you will receive all `html` pages which `Github Pages` are going to deploy.
 
