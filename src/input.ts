@@ -18,10 +18,11 @@ class Input {
       this.options.nonStartsWithDot = true;
     }
     this.excludes = this.options.excludes ? this.options.excludes : [ 'node_modules' ];
-    this.files = this.getFiles();
+    debug('Input options: %j', this.options);
+    this.files = this.loadFiles();
   }
 
-  private getFiles(sub?: string) {
+  protected loadFiles(sub?: string) {
     sub = sub || '';
     const base = this.options.source;
     const files = [];
@@ -33,7 +34,7 @@ class Input {
       }
       if (dirent.isDirectory()) {
         const p = path.join(sub, dirent.name);
-        files.push(...this.getFiles(p));
+        files.push(...this.loadFiles(p));
       } else {
         if (!dirent.name.endsWith(EXT)) {
           debug('excluded %s', dirent.name);

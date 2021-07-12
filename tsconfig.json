@@ -19,7 +19,7 @@
   "exclude": [
     "dist",
     "node_modules",
-    "__test__",
+    "test",
     "scripts",
     "docs",
     "example"
