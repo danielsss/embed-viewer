@@ -6,6 +6,8 @@ import * as utils from './utils';
 import * as _ from 'lodash';
 import { OutputOptions } from './definitions';
 
+const json = require('../package.json');
+
 const PAGE_TEMPLATE = path.join(__dirname, './templates/template.hbs');
 const INDEX_TEMPLATE = path.join(__dirname, './templates/index.hbs');
 const SCRIPT_TEMPLATE = path.join(__dirname, './templates/embed-viewer.js');
@@ -60,7 +62,7 @@ class Output {
     }
     const html = this.navigator(_.groupBy(files, file => file.dir.join('/')));
     debug('navigator html string:', html);
-    const compiled = template({ title: TITLE, files: html });
+    const compiled = template({ title: TITLE, html, git: json.homepage });
     fs.writeFileSync(path.join(this.options.target, '/index.html'), compiled);
   }
 
@@ -83,13 +85,16 @@ class Output {
     let html = '';
 
     const keys = Object.keys(groupInfo);
-    const ul = ['<ul>', '</ul>'];
+    const folderStyle = 'uk-list';
+    const fileStyle = 'uk-list uk-list-disc uk-list-primary';
+    const ul = ['<ul class="{style}">', '</ul>'];
     const li = ['<li>', '</li>']
+    const folder = '<span uk-icon="icon: folder" style="margin-right: 10px;"></span>'
     for (const key of keys) {
-      html += ul[0];
-      html += `${li[0]}${key}${li[1]}`;
+      html += ul[0].replace('{style}', folderStyle);
+      html += `${li[0]}${folder}${key}${li[1]}`;
       if (groupInfo[key].length > 0) {
-        html += ul[0];
+        html += ul[0].replace('{style}', fileStyle);
         for (const obj of groupInfo[key]) {
           const href = obj.name.replace('.xmind', '.html');
           const name = obj.name.split('.')[0];
