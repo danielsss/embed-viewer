@@ -11,7 +11,8 @@
     "lint": "node_modules/.bin/eslint . --fix --ext .ts",
     "build": "rm -rf ./dist && tsc -p . && cp -rp src/templates dist/templates",
     "link": "npm run build && npm link",
-    "debug": "DEBUG=embed:* viewer -i . -o ./docs -p"
+    "debug": "DEBUG=embed:* viewer -i . -o ./docs -p",
+    "cover:report": "nyc report --reporter=json && codecov"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
@@ -21,6 +22,7 @@
     "@typescript-eslint/eslint-plugin": "^4.28.2",
     "@typescript-eslint/parser": "^4.28.2",
     "chai": "^4.3.4",
+    "codecov": "^3.8.2",
     "eslint": "^7.30.0",
     "mocha": "^9.0.2",
     "nyc": "^15.1.0",
