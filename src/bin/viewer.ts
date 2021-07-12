@@ -16,6 +16,7 @@ program
   .usage('-i . -o ./docs/pages')
   .option('-i, --input <value>', 'The "*.xmind" source directory')
   .option('-o, --output <value>', 'The output directory where the converted pages are stored')
+  .option('-p, --purge', 'Purge the target directory before output pages')
   .version(packages.version)
   .parse();
 
@@ -45,8 +46,10 @@ const target = path.resolve(options.output);
 const input = new Input({ source });
 const output = new Output({ source, target, files: input.files });
 if (Array.isArray(input.files) && input.files.length > 0) {
-  output.purge();
-  output.compileIndex(input.files);
+  if (options.parge) {
+    output.purge();
+  }
+  output.compileIndex();
   output.compile();
   output.createScript();
 }

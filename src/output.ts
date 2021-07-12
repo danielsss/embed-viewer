@@ -52,10 +52,10 @@ class Output {
     }
   }
 
-  public compileIndex(list?: string[]) {
+  public compileIndex() {
     const template = Handlebars.compile(fs.readFileSync(INDEX_TEMPLATE, 'utf-8'));
     const files = [];
-    for (const str of (list || this.files)) {
+    for (const str of this.files) {
       files.push(utils.resolvePathString(str));
     }
     const html = this.navigator(_.groupBy(files, file => file.dir.join('/')));

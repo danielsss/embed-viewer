@@ -22,12 +22,6 @@ npm i --save-dev embed-viewer
 cd $project
 ```
 
-* Help information
-
-```shell
-viewer --help
-```
-
 * Generate GitHub Pages
 
 ```shell
@@ -48,3 +42,9 @@ viewer -i . -o ./docs
 4. Select the `branch` and the `folder` that pages are stored.
 
 > If all operations are done, then you can access your `GitHub Pages`.
+
+# More Information
+
+```shell
+viewer --help
+```
