@@ -48,9 +48,10 @@ const target = path.resolve(options.output);
 const excludes = options.excludes && typeof options.excludes === 'string' ?
   options.excludes.split(',') : null;
 const input = new Input({ source, excludes });
-const output = new Output({ source, target, files: input.files });
+const files = input.getLoadedFiles();
+const output = new Output({ source, target, files });
 
-if (Array.isArray(input.files) && input.files.length > 0) {
+if (Array.isArray(files) && files.length > 0) {
   try {
     if (options.parge) {
       output.purge();
