@@ -76,12 +76,12 @@ class Output {
     fs.createReadStream(SCRIPT_TEMPLATE).pipe(fs.createWriteStream(dest))
       .on('finish', () => {
         debug('script %s created', dest);
-        process.exit(0);
+        exit && process.exit(0);
       })
       .on('error', err => {
         debug('creat script %s error', dest);
         debug(err);
-        process.exit(1);
+        exit && process.exit(1);
       });
   }
 
