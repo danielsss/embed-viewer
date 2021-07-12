@@ -20,7 +20,7 @@ describe('Output Unit Test', function () {
 
   it('should return an instance of Output', done => {
     options = {
-      target: path.resolve('./docs'),
+      target: path.resolve('./.output'),
       source: path.resolve('.'),
       files: []
     }
