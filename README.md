@@ -25,7 +25,7 @@ cd $project
 * Generate GitHub Pages
 
 ```shell
-viewer -i . -o ./docs
+viewer -i . -o ./docs -p -e node_modules,dist,src
 ```
 
 > Commit the `docs` directory to your git repository
