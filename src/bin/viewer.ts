@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
 import * as path from 'path';
+import * as Debug from 'debug';
 import Input from '../input';
 import Output from '../output';
 import { Command } from 'commander';
 
 const packages = require('../../package.json');
 
-
+const debug = Debug('embed:bin:viewer');
 const program = new Command();
 
 program
@@ -45,11 +46,25 @@ const target = path.resolve(options.output);
 
 const input = new Input({ source });
 const output = new Output({ source, target, files: input.files });
+
 if (Array.isArray(input.files) && input.files.length > 0) {
-  if (options.parge) {
-    output.purge();
+  try {
+    if (options.parge) {
+      output.purge();
+    }
+    output.compileIndex();
+    output.compile();
+    output.createScript();
+    process.exit(0);
+  } catch (err) {
+    debug('Occurs Unhandled Error');
+    debug(err);
+    debug('\n');
+    debug('Commit your error to Github Issue: %s for improvement.', packages.bugs.url);
+    process.exit(1);
   }
-  output.compileIndex();
-  output.compile();
-  output.createScript();
+
+} else {
+  debug('Not found any maps.')
+  process.exit(0);
 }
