@@ -22,7 +22,10 @@ class Output {
   public source: string;
   public target: string;
 
-  constructor(protected options: OutputOptions = {} as OutputOptions) {
+  constructor(protected options: OutputOptions) {
+    if (!options || !options.files || !options.target || !options.source) {
+      throw new Error('options object are required');
+    }
     this.title = 'Embed Viewer';
     this.files = options.files;
     this.source = options.source;
@@ -32,11 +35,11 @@ class Output {
   public purge() {
     debug('purge %s', this.target);
     if (!fs.existsSync(this.target)) {
-      fs.mkdirSync(this.target);
+      fs.mkdirSync(this.target, { recursive: true });
       return null;
     }
     fs.rmdirSync(this.target, { recursive: true });
-    fs.mkdirSync(this.target);
+    fs.mkdirSync(this.target, { recursive: true });
   }
 
   public compile() {
