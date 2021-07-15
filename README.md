@@ -1,5 +1,6 @@
 ![](https://img.shields.io/github/license/danielsss/embed-viewer?style=flat-square)
 ![](https://img.shields.io/npm/v/embed-viewer?style=flat-square)
+[![Build status](https://ci.appveyor.com/api/projects/status/60xy90pqqv6janfy/branch/main?svg=true)](https://ci.appveyor.com/project/danielsss/embed-viewer/branch/main)
 # embed-viewer
 
 The `embed-viewer` is used for converting XMind file to html and viewing pages via GitHub.
