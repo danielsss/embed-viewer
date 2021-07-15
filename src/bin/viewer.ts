@@ -15,10 +15,11 @@ program
   .name('viewer')
   .description('This tool is used for converting "*.xmind" file to Gitlab pages')
   .usage('-i . -o ./docs/pages -f -e node_modules,src,...')
+  .option('-t, --title <value>', 'Specify the page title', 'Embed Viewer')
   .option('-i, --input <value>', 'The "*.xmind" source folder')
   .option('-o, --output <value>', 'The output folder where the converted pages are stored')
   .option('-p, --purge', 'Purge the target folder before output pages')
-  .option('-e, --excludes <value>', 'Specify folder that will excluded during the process of scanning')
+  .option('-e, --excludes <value>', 'Specify folder that will excluded during the process of scanning', 'node_modules')
   .version(packages.version)
   .parse();
 
@@ -49,7 +50,7 @@ const excludes = options.excludes && typeof options.excludes === 'string' ?
   options.excludes.split(',') : null;
 const input = new Input({ source, excludes });
 const files = input.getLoadedFiles();
-const output = new Output({ source, target, files });
+const output = new Output({ source, target, files, title: options.title });
 
 if (Array.isArray(files) && files.length > 0) {
   try {

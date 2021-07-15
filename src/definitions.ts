@@ -22,4 +22,6 @@ export interface OutputOptions {
   target: string;
 
   files: string[];
+
+  title?: string;
 }

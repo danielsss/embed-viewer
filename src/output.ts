@@ -28,7 +28,7 @@ class Output {
     if (!options || !options.files || !options.target || !options.source) {
       throw new Error('options object are required');
     }
-    this.title = 'Embed Viewer';
+    this.title = options.title || TITLE;
     this.files = options.files;
     this.source = options.source;
     this.target = options.target;
@@ -50,7 +50,7 @@ class Output {
       const template = Handlebars.compile(originalTemplate);
       const fp = path.join(this.source, file);
       const base64 = fs.readFileSync(fp, {encoding: 'base64'});
-      const compiled = template({ title: TITLE, base64 });
+      const compiled = template({ title: this.title, base64 });
       const arr = file.includes('/') ? file.split('/') : [ file ];
       const fullname = arr[arr.length - 1];
       let name = undefined;
@@ -75,7 +75,7 @@ class Output {
     }
     const html = this.navigator(_.groupBy(files, file => file.dir.join('/')));
     debug('navigator html string:', html);
-    const compiled = template({ title: TITLE, html, git: json.homepage });
+    const compiled = template({ title: this.title, html, git: json.homepage });
     fs.writeFileSync(path.join(this.options.target, '/index.html'), compiled);
     console.info('page %s is created', chalk.green('index.html'));
   }
