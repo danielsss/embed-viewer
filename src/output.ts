@@ -76,16 +76,20 @@ class Output {
       return null;
     }
     debug('prepare to create %s into destination %s', SCRIPT_TEMPLATE, dest);
-    fs.createReadStream(SCRIPT_TEMPLATE).pipe(fs.createWriteStream(dest))
-      .on('finish', () => {
-        debug('script %s created', dest);
-        exit && process.exit(0);
-      })
-      .on('error', err => {
-        debug('creat script %s error', dest);
-        debug(err);
-        exit && process.exit(1);
-      });
+    const finish = () => {
+      debug('script %s created', dest);
+      exit && process.exit(0);
+    }
+    const error = err => {
+      /* istanbul ignore next */
+      debug('creat script %s error \n%o', dest, err);
+      /* istanbul ignore next */
+      exit && process.exit(1);
+    }
+    fs.createReadStream(SCRIPT_TEMPLATE)
+      .pipe(fs.createWriteStream(dest))
+      .on('finish', finish)
+      .on('error', error);
   }
 
   protected navigator(groupInfo): string {

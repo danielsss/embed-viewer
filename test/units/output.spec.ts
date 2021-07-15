@@ -34,6 +34,8 @@ describe('Output Unit Test', function () {
   it('should purge the target folder before output new pages', done => {
     output.purge();
     expect(fs.readdirSync(options.target).length === 0).to.be.true;
+    fs.rmdirSync(options.target, { recursive: true });
+    output.purge();
     done();
   });
 
@@ -56,6 +58,7 @@ describe('Output Unit Test', function () {
   it('should compile and output js script', done => {
     output.createScript(false);
     expect(fs.readdirSync(options.target)).to.include('embed-viewer.js');
+    output.createScript(false);
     done();
   });
 });
