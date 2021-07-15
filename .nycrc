@@ -1,5 +1,5 @@
 {
   "extends": "@istanbuljs/nyc-config-typescript",
   "all": true,
-  "exclude": ["dist", "docs", "test", "src/templates/", "src/utils.ts", "*.js", "src/definitions.ts", ".output", "embed-viewer.js"]
+  "exclude": ["dist", "docs", "test", "src/templates/", "src/utils.ts", "*.js", "src/definitions.ts", ".output", "embed-viewer.js", "src/bin/viewer.ts"]
 }
