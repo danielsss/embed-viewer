@@ -1,5 +1,7 @@
 ![](https://img.shields.io/github/license/danielsss/embed-viewer?style=flat-square)
 # embed-viewer
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdanielsss%2Fembed-viewer.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fdanielsss%2Fembed-viewer?ref=badge_shield)
+
 
 The `embed-viewer` is used for converting XMind file to html and viewing pages via GitHub.
 It will scan the file of XMind type from your local `Git Repository` automatically. After that, 
@@ -49,3 +51,6 @@ viewer -i . -o ./docs -p -e node_modules,dist,src
 ```shell
 viewer --help
 ```
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdanielsss%2Fembed-viewer.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fdanielsss%2Fembed-viewer?ref=badge_large)
