@@ -66,10 +66,10 @@
             'width': '100%'
         }
     });
-    viewer.setZoomScale(100);
     const iframe = document.getElementById('mount').children[0];
     iframe.onload = function() {
         document.getElementById('loading').remove();
+        viewer.setZoomScale(100);
     }
 
     window.viewer = viewer;
