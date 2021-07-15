@@ -45,6 +45,12 @@
     "xmind-embed-viewer",
     "embed-viewer"
   ],
+  "files": [
+    "dist",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
   "bugs": {
     "url": "https://github.com/danielsss/embed-viewer/issues"
   },
