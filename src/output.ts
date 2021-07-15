@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as Debug from 'debug';
 import * as utils from './utils';
 import * as _ from 'lodash';
+
 import { OutputOptions } from './definitions';
 
 const json = require('../package.json');
@@ -43,8 +44,9 @@ class Output {
   }
 
   public compile() {
+    const originalTemplate = fs.readFileSync(PAGE_TEMPLATE, 'utf-8');
     for (const file of this.files) {
-      const template = Handlebars.compile(fs.readFileSync(PAGE_TEMPLATE, 'utf-8'));
+      const template = Handlebars.compile(originalTemplate);
       const fp = path.join(this.source, file);
       const base64 = fs.readFileSync(fp, {encoding: 'base64'});
       const compiled = template({ title: TITLE, base64 });
