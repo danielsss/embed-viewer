@@ -49,3 +49,7 @@ viewer -i . -o ./docs -p -e node_modules,dist,src
 ```shell
 viewer --help
 ```
+
+# LICENSE
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdanielsss%2Fembed-viewer.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fdanielsss%2Fembed-viewer?ref=badge_large)
