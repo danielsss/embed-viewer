@@ -5,6 +5,7 @@ import * as Debug from 'debug';
 import * as utils from './utils';
 import * as _ from 'lodash';
 
+import * as chalk from 'chalk';
 import { OutputOptions } from './definitions';
 
 const json = require('../package.json');
@@ -50,12 +51,19 @@ class Output {
       const fp = path.join(this.source, file);
       const base64 = fs.readFileSync(fp, {encoding: 'base64'});
       const compiled = template({ title: TITLE, base64 });
-      const arr = file.includes('/') ? file.split('/') : file;
+      const arr = file.includes('/') ? file.split('/') : [ file ];
       const fullname = arr[arr.length - 1];
-      const name = fullname.includes('.') ? fullname.split('.')[0] : fullname;
+      let name = undefined;
+      if (fullname.includes('.')) {
+        const parts = fullname.split('.');
+        name = parts.slice(0, parts.length - 1).join('.');
+      } else {
+        name = fullname;
+      }
       const page = path.join(this.target, `/${name}.html`);
       debug('create page %s', page);
       fs.writeFileSync(page, compiled);
+      console.info('page %s is created', chalk.green(page));
     }
   }
 
@@ -69,6 +77,7 @@ class Output {
     debug('navigator html string:', html);
     const compiled = template({ title: TITLE, html, git: json.homepage });
     fs.writeFileSync(path.join(this.options.target, '/index.html'), compiled);
+    console.info('page %s is created', chalk.green('index.html'));
   }
 
   public createScript(exit: boolean = false) {
@@ -80,6 +89,7 @@ class Output {
     debug('prepare to create %s into destination %s', SCRIPT_TEMPLATE, dest);
     const finish = () => {
       debug('script %s created', dest);
+      console.info('script %s is created.', chalk.green(SCRIPT_TEMPLATE))
       exit && process.exit(0);
     }
     const error = err => {
