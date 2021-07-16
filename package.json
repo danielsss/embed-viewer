@@ -12,7 +12,7 @@
     "build": "rm -rf ./dist && tsc -p . && cp -rp src/templates dist/templates",
     "link": "npm run build && npm link",
     "debug": "DEBUG=embed:* viewer -i . -o ./docs -p",
-    "cover:report": "nyc report --reporter=json && codecov"
+    "cover:report": "nyc report --reporter=text-lcov | ./node_modules/.bin/codecov --pipe"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
