@@ -1,12 +1,13 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as Debug from 'debug';
-import { InputOptions } from './definitions';
+import { InputOptions, Properties } from './definitions';
 
 const EXT = '.xmind';
 const debug = Debug('embed:viewer:input');
 
 class Input {
+  protected struct: Properties[];
   protected files: string[];
 
   constructor(protected options: InputOptions = {} as InputOptions) {
@@ -22,15 +23,47 @@ class Input {
     this.options.excludes = this.options.excludes ? this.options.excludes : [ 'node_modules' ];
     debug('Input options: %j', this.options);
     this.files = this.loadFiles();
-    debug('loaded:', this.files);
+    this.struct = this.deconstruct();
+    debug('loaded: %j', this.struct);
   }
 
   public getLoadedFiles(): string[] {
     return this.files;
   }
 
+  public getStruct(): Properties[] {
+    return this.struct;
+  }
+
   public opts(): InputOptions {
     return this.options;
+  }
+
+  protected deconstruct(sub?: string) {
+    sub = sub || '';
+    const base = this.options.source;
+    const values = [];
+    const unfiltered = fs.readdirSync(path.join(base, sub || ''), {withFileTypes: true});
+    const filtered = unfiltered.filter(dir => !this.options.excludes.includes(dir.name));
+    for (const dirent of filtered) {
+      if (this.options.nonStartsWithDot && dirent.name.startsWith('.')) {
+        continue;
+      }
+
+      if (dirent.isDirectory()) {
+        const p = path.join(sub, dirent.name);
+        const arr = this.deconstruct(p);
+        if (Array.isArray(arr) && arr.length > 0) {
+          values.push({isDir: true, name: dirent.name, values: arr});
+        }
+      } else {
+        if (!dirent.name.endsWith(EXT)) {
+          continue;
+        }
+        values.push({isDir: false, isInclude: true, name: dirent.name});
+      }
+    }
+    return values;
   }
 
   protected loadFiles(sub?: string): string[] {
@@ -41,15 +74,14 @@ class Input {
     const filtered = unfiltered.filter(dir => !this.options.excludes.includes(dir.name));
     for (const dirent of filtered) {
       if (this.options.nonStartsWithDot && dirent.name.startsWith('.')) {
-        debug('starts with dot %s', dirent.name);
         continue;
       }
+
       if (dirent.isDirectory()) {
         const p = path.join(sub, dirent.name);
         files.push(...this.loadFiles(p));
       } else {
         if (!dirent.name.endsWith(EXT)) {
-          debug('excluded %s', dirent.name);
           continue;
         }
         files.push(path.join(sub, dirent.name));

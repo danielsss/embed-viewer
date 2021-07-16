@@ -4,9 +4,10 @@ import * as path from 'path';
 import * as Debug from 'debug';
 import * as utils from './utils';
 import * as _ from 'lodash';
-
 import * as chalk from 'chalk';
-import { OutputOptions } from './definitions';
+
+import { TITLE, LOGO_ADDR } from './config';
+import { OutputOptions, Properties } from './definitions';
 
 const json = require('../package.json');
 
@@ -14,15 +15,15 @@ const PAGE_TEMPLATE = path.join(__dirname, './templates/template.hbs');
 const INDEX_TEMPLATE = path.join(__dirname, './templates/index.hbs');
 const SCRIPT_TEMPLATE = path.join(__dirname, './templates/embed-viewer.js');
 
-const TITLE = 'Embed Viewer';
-
 const debug = Debug('embed:viewer:output');
 
 class Output {
   public title: string;
   public files: string[];
+  public struct: Properties[];
   public source: string;
   public target: string;
+  public logo: string;
 
   constructor(protected options: OutputOptions) {
     if (!options || !options.files || !options.target || !options.source) {
@@ -30,8 +31,10 @@ class Output {
     }
     this.title = options.title || TITLE;
     this.files = options.files;
+    this.struct = options.struct;
     this.source = options.source;
     this.target = options.target;
+    this.logo = options.logo || LOGO_ADDR;
   }
 
   public purge() {
@@ -50,7 +53,7 @@ class Output {
       const template = Handlebars.compile(originalTemplate);
       const fp = path.join(this.source, file);
       const base64 = fs.readFileSync(fp, {encoding: 'base64'});
-      const compiled = template({ title: this.title, base64 });
+      const compiled = template({ title: this.title, base64, logo: LOGO_ADDR });
       const arr = file.includes('/') ? file.split('/') : [ file ];
       const fullname = arr[arr.length - 1];
       let name = undefined;
@@ -70,12 +73,17 @@ class Output {
   public compileIndex() {
     const template = Handlebars.compile(fs.readFileSync(INDEX_TEMPLATE, 'utf-8'));
     const files = [];
+    debug('files:', this.files);
     for (const str of this.files) {
       files.push(utils.resolvePathString(str));
     }
     const html = this.navigator(_.groupBy(files, file => file.dir.join('/')));
     debug('navigator html string:', html);
-    const compiled = template({ title: this.title, html, git: json.homepage });
+    const compiled = template({
+      title: this.title, html,
+      git: json.homepage, logo: LOGO_ADDR,
+      struct: JSON.stringify(this.struct)
+    });
     fs.writeFileSync(path.join(this.options.target, '/index.html'), compiled);
     console.info('page %s is created', chalk.green('index.html'));
   }

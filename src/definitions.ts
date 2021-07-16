@@ -1,3 +1,6 @@
+/**
+ * Input options
+ */
 export interface InputOptions {
   /**
    * It will list all ".xmind" file from the source directory.
@@ -16,6 +19,19 @@ export interface InputOptions {
   excludes?: string[];
 }
 
+/**
+ * The construct of Navigator
+ */
+export interface Properties {
+  isDir: boolean;
+  isIncluded: boolean;
+  name: string;
+  values?: Properties[];
+}
+
+/**
+ * Output options
+ */
 export interface OutputOptions {
   source: string;
 
@@ -23,5 +39,9 @@ export interface OutputOptions {
 
   files: string[];
 
+  struct: Properties[];
+
   title?: string;
+
+  logo?: string;
 }

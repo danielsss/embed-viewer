@@ -11,6 +11,7 @@ const packages = require('../../package.json');
 const debug = Debug('embed:bin:viewer');
 const program = new Command();
 
+// TODO: implement logo parameter
 program
   .name('viewer')
   .description('This tool is used for converting "*.xmind" file to Gitlab pages')
@@ -50,7 +51,8 @@ const excludes = options.excludes && typeof options.excludes === 'string' ?
   options.excludes.split(',') : null;
 const input = new Input({ source, excludes });
 const files = input.getLoadedFiles();
-const output = new Output({ source, target, files, title: options.title });
+const struct = input.getStruct();
+const output = new Output({ source, target, files, title: options.title, struct });
 
 if (Array.isArray(files) && files.length > 0) {
   try {
