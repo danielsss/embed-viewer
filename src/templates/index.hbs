@@ -72,10 +72,8 @@
         h3.className = 'uk-card-title';
         span.setAttribute('uk-icon', 'icon: file-pdf; ratio: 2.5');
 
-        a.href = data.name.replace('.xmind', '.html');
-        a.onclick = () => {
-            // render(state.child[data.name]);
-        };
+        a.href = data.hash + '.html';
+        a.onclick = () => {};
         const name = data.name.includes('.') ? data.name.split('.')[0] : data.name;
         a.append(`File: ${name}`);
         a.className = 'uk-link-muted .uk-text-truncate';

@@ -53,7 +53,7 @@
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/js/uikit-icons.min.js"></script>
 <script type="application/javascript">
     const state = {
-        data: JSON.parse('[{"isDir":true,"name":"test","values":[{"isDir":true,"name":"b","values":[{"isDir":false,"isInclude":true,"name":"栗子-1.xmind"},{"isDir":false,"isInclude":true,"name":"栗子🌰-2.xmind"}]},{"isDir":true,"name":"c","values":[{"isDir":false,"isInclude":true,"name":"example-1.xmind"}]},{"isDir":false,"isInclude":true,"name":"example-1-1.xmind"},{"isDir":true,"name":"fixtures","values":[{"isDir":false,"isInclude":true,"name":"B+Tree.xmind"},{"isDir":true,"name":"a","values":[{"isDir":false,"isInclude":true,"name":"overview.xmind"}]}]}]}]'),
+        data: JSON.parse('[{"isDir":true,"name":"test","hash":"adb2366740f9415d462dd031a20159e7","values":[{"isDir":true,"name":"b","hash":"9df32f4682cc5844c7a4cd66ebe48d51","values":[{"isDir":false,"isInclude":true,"name":"栗子-1.xmind","hash":"44027644529d0b0756ff682398e77a2a"},{"isDir":false,"isInclude":true,"name":"栗子🌰-2.xmind","hash":"e93ffbeae0bd57dea675f982cfcc8e27"}]},{"isDir":true,"name":"c","hash":"26c34c5514856c57475f939cb7526512","values":[{"isDir":false,"isInclude":true,"name":"example-1.xmind","hash":"4c13d3940f38120968447e8569591430"}]},{"isDir":false,"isInclude":true,"name":"example-1-1.xmind","hash":"39ee2403cb36b33d08e17f696521d2c9"},{"isDir":true,"name":"fixtures","hash":"63123ed6690161a750345b44cd66f0e8","values":[{"isDir":false,"isInclude":true,"name":"B+Tree.xmind","hash":"45e78f049d5f5719e8291cd7c753997a"},{"isDir":true,"name":"a","hash":"c76d651fd75aea7ffc7f5dd0822cb3d1","values":[{"isDir":false,"isInclude":true,"name":"overview.xmind","hash":"86760f2fcecf55cd452597754e18b551"}]}]}]}]'),
         child: {}
     };
 
@@ -72,10 +72,8 @@
         h3.className = 'uk-card-title';
         span.setAttribute('uk-icon', 'icon: file-pdf; ratio: 2.5');
 
-        a.href = data.name.replace('.xmind', '.html');
-        a.onclick = () => {
-            // render(state.child[data.name]);
-        };
+        a.href = data.hash + '.html';
+        a.onclick = () => {};
         const name = data.name.includes('.') ? data.name.split('.')[0] : data.name;
         a.append(`File: ${name}`);
         a.className = 'uk-link-muted .uk-text-truncate';

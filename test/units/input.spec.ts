@@ -20,7 +20,7 @@ describe('Input Unit Test', function () {
     const files = input.getLoadedFiles();
     expect(files).to.be.an('array');
     for (const f of files) {
-      expect(!f.startsWith('.')).to.be.true;
+      expect(!f.relative.startsWith('.')).to.be.true;
     }
     done();
   });
@@ -34,7 +34,7 @@ describe('Input Unit Test', function () {
     expect(files).to.be.an('array');
 
     for (const file of files) {
-      expect(fs.existsSync(path.join(source, file))).to.be.true;
+      expect(fs.existsSync(path.join(source, file.relative))).to.be.true;
     }
     done();
   });

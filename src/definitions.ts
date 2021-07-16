@@ -1,3 +1,7 @@
+export interface ResolvedFile {
+  relative: string;
+  hash: string;
+}
 /**
  * Input options
  */
@@ -26,6 +30,7 @@ export interface Properties {
   isDir: boolean;
   isIncluded: boolean;
   name: string;
+  hash?: string;
   values?: Properties[];
 }
 
@@ -37,7 +42,7 @@ export interface OutputOptions {
 
   target: string;
 
-  files: string[];
+  files: ResolvedFile[];
 
   struct: Properties[];
 
