@@ -7,6 +7,18 @@ The `embed-viewer` is used for converting XMind file to html and viewing pages v
 It will scan the file of XMind type from your local `Git Repository` automatically. After that, 
 you will receive a lot of `html` pages which `Github Pages` are going to deploy.
 
+# Requirements
+
+* Node.js >= 8.0.0
+
+# Supported System
+
+| Name | Supported |
+|:----:|:--------: |
+| Linux | Y |
+| MacOS | Y |
+| Win32 | Y |
+
 # Example
 
 * [Github Page Example](https://danielsss.github.io/embed-viewer)
