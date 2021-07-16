@@ -21,6 +21,7 @@ program
   .option('-o, --output <value>', 'The output folder where the converted pages are stored')
   .option('-p, --purge', 'Purge the target folder before output pages')
   .option('-e, --excludes <value>', 'Specify folder that will excluded during the process of scanning', 'node_modules')
+  .option('-l, --logo <value>', 'Specify the logo address')
   .version(packages.version)
   .parse();
 
@@ -52,7 +53,19 @@ const excludes = options.excludes && typeof options.excludes === 'string' ?
 const input = new Input({ source, excludes });
 const files = input.getLoadedFiles();
 const struct = input.getStruct();
-const output = new Output({ source, target, files, title: options.title, struct });
+const outputOptions = { source, target, files, title: options.title, struct };
+
+if (options.logo && typeof options.logo === 'string') {
+  if (!options.logo.startsWith('http://') && !options.logo.startsWith('https://')) {
+    program.addHelpText('afterAll', 'The logo address must starts with "http://" or "https://"');
+    program.help();
+    process.exit(1);
+  }
+
+  outputOptions['logo'] = options.logo;
+}
+
+const output = new Output(outputOptions);
 
 if (Array.isArray(files) && files.length > 0) {
   try {
