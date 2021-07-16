@@ -53,7 +53,7 @@
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/js/uikit-icons.min.js"></script>
 <script type="application/javascript">
     const state = {
-        data: JSON.parse('[{"isDir":true,"name":"test","hash":"adb2366740f9415d462dd031a20159e7","values":[{"isDir":true,"name":"b","hash":"9df32f4682cc5844c7a4cd66ebe48d51","values":[{"isDir":false,"isInclude":true,"name":"栗子-1.xmind","hash":"44027644529d0b0756ff682398e77a2a"},{"isDir":false,"isInclude":true,"name":"栗子🌰-2.xmind","hash":"e93ffbeae0bd57dea675f982cfcc8e27"}]},{"isDir":true,"name":"c","hash":"26c34c5514856c57475f939cb7526512","values":[{"isDir":false,"isInclude":true,"name":"example-1.xmind","hash":"4c13d3940f38120968447e8569591430"}]},{"isDir":false,"isInclude":true,"name":"example-1-1.xmind","hash":"39ee2403cb36b33d08e17f696521d2c9"},{"isDir":true,"name":"fixtures","hash":"63123ed6690161a750345b44cd66f0e8","values":[{"isDir":false,"isInclude":true,"name":"B+Tree.xmind","hash":"45e78f049d5f5719e8291cd7c753997a"},{"isDir":true,"name":"a","hash":"c76d651fd75aea7ffc7f5dd0822cb3d1","values":[{"isDir":false,"isInclude":true,"name":"overview.xmind","hash":"86760f2fcecf55cd452597754e18b551"}]}]}]}]'),
+        data: JSON.parse('[{"isDir":true,"name":"test","hash":"687cef6a173fea43a3d4de6f47d934bb","values":[{"isDir":true,"name":"b","hash":"46a9f8a0ca5c7947744526b0c9437f16","values":[{"isDir":false,"isInclude":true,"name":"栗子🌰-2.xmind","hash":"de29fc232077b1cec1d7c8c406da187e"}]},{"isDir":true,"name":"c","hash":"8ea3b621ffce056e803044f4f7825718","values":[{"isDir":false,"isInclude":true,"name":"example-1.xmind","hash":"c8d1a8dac06481dfdf6b3fc23e54d439"}]},{"isDir":false,"isInclude":true,"name":"example-1-1.xmind","hash":"9b61fea40b4524f157d49967b5f2ad65"},{"isDir":true,"name":"fixtures","hash":"ca3094c09e77ea5813ff714d5c22948d","values":[{"isDir":false,"isInclude":true,"name":"B+Tree.xmind","hash":"c9501728f6fbd5e9cc1dda4c39f2440c"},{"isDir":true,"name":"a","hash":"21797f33d7d0ecd89fd9aa4210667c43","values":[{"isDir":false,"isInclude":true,"name":"overview.xmind","hash":"8cc010c4943bea8d930e6cb086d4cc3c"}]}]},{"isDir":true,"name":"目录","hash":"6656d2ad7a1e19b4090d7871a93d67b4","values":[{"isDir":false,"isInclude":true,"name":"栗子-1.xmind","hash":"ddcafcfad042953c7db5ff81f7bc4393"}]}]}]'),
         child: {}
     };
 
@@ -75,7 +75,7 @@
         a.href = data.hash + '.html';
         a.onclick = () => {};
         const name = data.name.includes('.') ? data.name.split('.')[0] : data.name;
-        a.append(`File: ${name}`);
+        a.append(`FILE: ${name}`);
         a.className = 'uk-link-muted .uk-text-truncate';
         h3.prepend(span);
         div.prepend(h3);
@@ -97,7 +97,7 @@
         a.onclick = () => {
             render(state.child[data.name]);
         };
-        a.append(`Folder: ${data.name}`);
+        a.append(`FOLDER: ${data.name}`);
         a.className = 'uk-link-muted .uk-text-truncate';
 
         h3.prepend(span);

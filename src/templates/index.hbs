@@ -75,7 +75,7 @@
         a.href = data.hash + '.html';
         a.onclick = () => {};
         const name = data.name.includes('.') ? data.name.split('.')[0] : data.name;
-        a.append(`File: ${name}`);
+        a.append(`FILE: ${name}`);
         a.className = 'uk-link-muted .uk-text-truncate';
         h3.prepend(span);
         div.prepend(h3);
@@ -97,7 +97,7 @@
         a.onclick = () => {
             render(state.child[data.name]);
         };
-        a.append(`Folder: ${data.name}`);
+        a.append(`FOLDER: ${data.name}`);
         a.className = 'uk-link-muted .uk-text-truncate';
 
         h3.prepend(span);
