@@ -112,4 +112,4 @@ fixtures
 #
 .output
 
-test/*.xmind
+*.xmind
