@@ -3,40 +3,142 @@
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/css/uikit.min.css" />
     <meta charset="UTF-8">
-    <title>Embed Viewer</title>
+    <style>
+        .uk-container {
+            margin-bottom: 15px;
+        }
+
+        .uk-card-default {
+            background: #fff;
+            color: #666;
+            box-shadow:0 0 10px 0 rgba(0, 0, 0, 0.15);border:0;
+        }
+    </style>
+    <title>Daniels</title>
 </head>
 <body>
-    <nav style="background-color: #39f;" class="uk-navbar-container uk-margin-bottom" uk-navbar="top: 200">
-        <div class="uk-navbar-left">
-            <img class="uk-logo uk-margin-left" src="https://s3.cn-north-1.amazonaws.com.cn/assets.xmind.cn/www/assets/images/xmind-logo-dark-66e9bc4b67.svg" alt="">
-            <ul class="uk-navbar-nav">
-                <li>
-                    <a href="#" style="color: #fff">
-                        <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
-                        Embed Viewer
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="uk-navbar-right">
-            <iframe
-                    src="https://ghbtns.com/github-btn.html?user=danielsss&repo=embed-viewer&type=star&count=true"
-                    frameborder="0" scrolling="0" width="150" height="20" title="GitHub"
-            ></iframe>
-        </div>
-    </nav>
-
-    <div class="uk-section">
-        <div class="uk-container">
-            <ul class="uk-list"><li><span uk-icon="icon: folder" style="margin-right: 10px;"></span>test/b</li><ul class="uk-list uk-list-disc uk-list-primary"><li><a href="example-1.html">example-1</a></li><li><a href="example-2.html">example-2</a></li></ul></ul><ul class="uk-list"><li><span uk-icon="icon: folder" style="margin-right: 10px;"></span>test/c</li><ul class="uk-list uk-list-disc uk-list-primary"><li><a href="example-1.html">example-1</a></li></ul></ul><ul class="uk-list"><li><span uk-icon="icon: folder" style="margin-right: 10px;"></span>test/fixtures</li><ul class="uk-list uk-list-disc uk-list-primary"><li><a href="B+Tree.html">B+Tree</a></li></ul></ul><ul class="uk-list"><li><span uk-icon="icon: folder" style="margin-right: 10px;"></span>test/fixtures/a</li><ul class="uk-list uk-list-disc uk-list-primary"><li><a href="overview.html">overview</a></li></ul></ul>
-        </div>
+<nav style="background-color: #39f;" class="uk-navbar-container uk-margin-bottom" uk-navbar="top: 200">
+    <div class="uk-navbar-left">
+        <img class="uk-logo uk-margin-left" src="https://getuikit.com/images/uikit-logo.svg" alt="">
+        <ul class="uk-navbar-nav">
+            <li>
+                <a href="#" style="color: #fff">
+                    <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
+                    Daniels
+                </a>
+            </li>
+        </ul>
     </div>
+    <div class="uk-navbar-right">
+        <iframe
+                src="https://ghbtns.com/github-btn.html?user=danielsss&repo=embed-viewer&type=star&count=true"
+                frameborder="0" scrolling="0" width="150" height="20" title="GitHub"
+        ></iframe>
+    </div>
+</nav>
+
+<div class="uk-section">
+    <div class="uk-container">
+        <h3><a id="home" onclick="onClickTop()" class="uk-link-heading" href="#">Top</a></h3>
+    </div>
+    <div class="uk-container">
+        <hr>
+    </div>
+    <div id="ctx" class="uk-container"></div>
+</div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/js/uikit.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/js/uikit-icons.min.js"></script>
 <script type="application/javascript">
-    const struct = JSON.parse('[{"isDir":true,"name":"test","values":[{"isDir":true,"name":"b","values":[{"isDir":false,"isInclude":true,"name":"example-1.xmind"},{"isDir":false,"isInclude":true,"name":"example-2.xmind"}]},{"isDir":true,"name":"c","values":[{"isDir":false,"isInclude":true,"name":"example-1.xmind"}]},{"isDir":true,"name":"fixtures","values":[{"isDir":false,"isInclude":true,"name":"B+Tree.xmind"},{"isDir":true,"name":"a","values":[{"isDir":false,"isInclude":true,"name":"overview.xmind"}]}]}]}]');
-    window.struct = struct;
-    //TODO: dynamic render directories
+    const state = {
+        data: JSON.parse('[{"isDir":true,"name":"test","values":[{"isDir":true,"name":"b","values":[{"isDir":false,"isInclude":true,"name":"example-1.xmind"},{"isDir":false,"isInclude":true,"name":"example-2.xmind"}]},{"isDir":true,"name":"c","values":[{"isDir":false,"isInclude":true,"name":"example-1.xmind"}]},{"isDir":false,"isInclude":true,"name":"example-1-1.xmind"},{"isDir":true,"name":"fixtures","values":[{"isDir":false,"isInclude":true,"name":"B+Tree.xmind"},{"isDir":true,"name":"a","values":[{"isDir":false,"isInclude":true,"name":"overview.xmind"}]}]}]}]'),
+        child: {}
+    };
+
+    const onClickTop = function() {
+      setLink('Top');
+      state.child = {};
+      render();
+    }
+
+    const setLink = function(str) {
+      const home = document.getElementById('home');
+      home.textContent = str;
+    }
+
+    const createFile = function(data) {
+        const div = document.createElement('div');
+        const h3 = document.createElement('h3');
+        const span = document.createElement('span');
+        const a = document.createElement('a');
+        div.className = 'uk-card uk-card-default uk-height-small uk-card-body uk-text-center';
+        h3.className = 'uk-card-title';
+        span.setAttribute('uk-icon', 'icon: file-pdf; ratio: 2.5');
+
+        a.href = data.name.replace('.xmind', '.html');
+        a.onclick = () => {
+            // render(state.child[data.name]);
+        };
+        const name = data.name.includes('.') ? data.name.split('.')[0] : data.name;
+        a.append(`File: ${name}`);
+        a.className = 'uk-link-muted .uk-text-truncate';
+        h3.prepend(span);
+        div.prepend(h3);
+        div.append(a);
+        return div;
+    }
+
+    const createFolder = function(data) {
+        const div = document.createElement('div');
+        const h3 = document.createElement('h3');
+        const span = document.createElement('span');
+        const a = document.createElement('a');
+        div.className = 'uk-card uk-card-default uk-height-small uk-card-body uk-text-center';
+        h3.className = 'uk-card-title';
+
+        span.setAttribute('uk-icon', 'icon: folder; ratio: 2.5');
+
+        a.href = '#';
+        a.onclick = () => {
+            console.info('===========', state.child[data.name])
+            render(state.child[data.name]);
+            setLink('Back To Top')
+        };
+        a.append(`Folder: ${data.name}`);
+        a.className = 'uk-link-muted .uk-text-truncate';
+
+        h3.prepend(span);
+        div.prepend(h3);
+        div.append(a);
+        return div;
+    }
+
+    const render = function(data = []) {
+        const ctx = document.getElementById('ctx');
+        ctx.innerHTML = '';
+        data = data.length > 0 ? data : state.data;
+        if (data.length > 0) {
+            const ul = document.createElement('ul');
+            ul.className = 'uk-grid-small uk-child-width-1-2 uk-child-width-1-4@s';
+            ul.id = 'list';
+            ul.setAttribute('uk-sortable', 'handle: .uk-card');
+            ul.setAttribute('uk-grid', '');
+            ul.setAttribute('uk-scrollspy', 'cls: uk-animation-fade; target: .uk-card; delay: 100; repeat: true');
+            for (const d of data) {
+                const li = document.createElement('li');
+                if (d.isDir === true) {
+                    li.appendChild(createFolder(d));
+                    state.child[d.name] = d.values;
+                } else {
+                    li.appendChild(createFile(d));
+                }
+                ul.appendChild(li);
+            }
+            ctx.appendChild(ul);
+        }
+    }
+
+    window.state = state;
+    render();
 </script>
 </html>
