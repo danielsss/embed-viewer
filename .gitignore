@@ -111,3 +111,5 @@ fixtures
 
 #
 .output
+
+test/*.xmind
