@@ -2,11 +2,11 @@ import * as Handlebars from 'handlebars';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as Debug from 'debug';
-import * as utils from './utils';
 import * as chalk from 'chalk';
+import * as utils from './utils';
 
 import { TITLE, LOGO_ADDR } from './config';
-import { OutputOptions, Properties } from './definitions';
+import { OutputOptions, Properties, ResolvedFile } from './definitions';
 
 const json = require('../package.json');
 
@@ -18,7 +18,7 @@ const debug = Debug('embed:viewer:output');
 
 class Output {
   public title: string;
-  public files: string[];
+  public files: ResolvedFile[];
   public struct: Properties[];
   public source: string;
   public target: string;
@@ -50,38 +50,25 @@ class Output {
     const originalTemplate = fs.readFileSync(PAGE_TEMPLATE, 'utf-8');
     for (const file of this.files) {
       const template = Handlebars.compile(originalTemplate);
-      const fp = path.join(this.source, file);
+      const fp = path.join(this.source, file.relative);
       const base64 = fs.readFileSync(fp, {encoding: 'base64'});
       const compiled = template({ title: this.title, base64, logo: this.logo });
-      const arr = file.includes('/') ? file.split('/') : [ file ];
-      const fullname = arr[arr.length - 1];
-      let name = undefined;
-      if (fullname.includes('.')) {
-        const parts = fullname.split('.');
-        name = parts.slice(0, parts.length - 1).join('.');
-      } else {
-        name = fullname;
-      }
-      const page = path.join(this.target, `/${name}.html`);
+      const page = path.join(this.target, `/${file.hash}.html`);
       debug('create page %s', page);
       fs.writeFileSync(page, compiled);
-      console.info('%s is created', chalk.green(page));
+      console.info('> %s', chalk.green(utils.file.name.extra(page)));
     }
   }
 
   public compileIndex() {
     const template = Handlebars.compile(fs.readFileSync(INDEX_TEMPLATE, 'utf-8'));
-    const files = [];
-    for (const str of this.files) {
-      files.push(utils.resolvePathString(str));
-    }
     const compiled = template({
       title: this.title,
       git: json.homepage, logo: this.logo,
       struct: JSON.stringify(this.struct)
     });
     fs.writeFileSync(path.join(this.options.target, '/index.html'), compiled);
-    console.info('%s is created', chalk.green('index.html'));
+    console.info('> %s', chalk.green('index.html'));
   }
 
   public createScript(exit: boolean = false) {
@@ -93,7 +80,7 @@ class Output {
     debug('prepare to create %s into destination %s', SCRIPT_TEMPLATE, dest);
     const finish = () => {
       debug('script %s created', dest);
-      console.info('%s is created.', chalk.green(SCRIPT_TEMPLATE))
+      console.info('> %s', chalk.green(utils.file.name.extra(SCRIPT_TEMPLATE)));
       exit && process.exit(0);
     }
     const error = err => {
