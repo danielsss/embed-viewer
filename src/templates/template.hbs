@@ -4,41 +4,58 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/css/uikit.min.css" />
     <meta charset="UTF-8">
     <style>
+        .uk-container {
+            margin-bottom: 20px;
+        }
     </style>
     <title>{{title}}</title>
 </head>
 <body>
-    <nav style="background-color: #39f;" class="uk-navbar-container uk-margin-bottom" uk-navbar="top: 200">
-        <div class="uk-navbar-left">
-            <img class="uk-logo uk-margin-left" src="{{logo}}" alt="">
-            <ul class="uk-navbar-nav">
-                <li>
-                    <a href="#" style="color: #fff">
-                        <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
-                        {{title}}
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="uk-navbar-right">
-            <iframe
-                    src="https://ghbtns.com/github-btn.html?user=danielsss&repo=embed-viewer&type=star&count=true"
-                    frameborder="0" scrolling="0" width="150" height="20" title="GitHub"
-            ></iframe>
-        </div>
-    </nav>
-    <div id="loading" class="uk-section">
-        <div class="uk-container uk-width-medium">
-            <div class="uk-column-1@m" style="text-align: center;">
-                <span uk-spinner="ratio: 4.5"></span>
-                <blockquote cite="#" class="uk-column-span"></blockquote>
-                <p>Please, Waiting for a moment.</p>
-            </div>
+<nav style="background-color: #39f;" class="uk-navbar-container uk-margin-bottom" uk-navbar="top: 200">
+    <div class="uk-navbar-left">
+        <img class="uk-logo uk-margin-left" src="{{logo}}" alt="">
+        <ul class="uk-navbar-nav">
+            <li>
+                <a href="#" style="color: #fff">
+                    <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
+                    {{title}}
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="uk-navbar-right">
+        <iframe
+                src="https://ghbtns.com/github-btn.html?user=danielsss&repo=embed-viewer&type=star&count=true"
+                frameborder="0" scrolling="0" width="150" height="20" title="GitHub"
+        ></iframe>
+    </div>
+</nav>
+<div id="loading" class="uk-section">
+    <div class="uk-container uk-width-medium">
+        <div class="uk-column-1@m" style="text-align: center;">
+            <span uk-spinner="ratio: 4.5"></span>
+            <blockquote cite="#" class="uk-column-span"></blockquote>
+            <p>Please, Waiting for a moment.</p>
         </div>
     </div>
-    <div style="max-width: 100%;">
+</div>
+<div class="uk-section">
+    <div id="btn" class="uk-container" style="visibility: hidden;">
+        <button id="home" class="uk-button uk-button-default uk-button-small" onclick="home()">
+            <span class="uk-icon" uk-icon="icon: home"></span>
+        </button>
+        <button id="zi" class="uk-button uk-button-default uk-button-small" onclick="onZoomIn()">
+            <span class="uk-icon" uk-icon="icon: expand"></span>
+        </button>
+        <button id="zo" class="uk-button uk-button-default uk-button-small" onclick="onZoomOut()">
+            <span class="uk-icon" uk-icon="icon: shrink"></span>
+        </button>
+    </div>
+    <div id="line" class="uk-container" style="visibility: hidden;"><hr></div>
+    <div class="uk-container">
         <div id="mount"></div>
     </div>
+</div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/js/uikit.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/js/uikit-icons.min.js"></script>
@@ -69,7 +86,26 @@
     const iframe = document.getElementById('mount').children[0];
     iframe.onload = function() {
         document.getElementById('loading').remove();
-        viewer.setZoomScale(100);
+        document.getElementById('btn').style = 'visibility: visible';
+        document.getElementById('line').style = 'visibility: visible';
+        setTimeout(function () {
+          viewer.setZoomScale(100);
+        }, 1000);
+    }
+
+    const onZoomIn = function() {
+        const scale = window.viewer.zoom;
+        window.viewer.setZoomScale(parseInt(scale, 10) + 10);
+    }
+    const onZoomOut = function() {
+        const scale = window.viewer.zoom;
+        window.viewer.setZoomScale(parseInt(scale, 10) - 10);
+    }
+    const home = function() {
+      const href = document.location.href;
+      const arr = href.split('/');
+      const name = arr[arr.length - 1];
+      document.location.href = document.location.href.replace(name, 'index.html');
     }
 
     window.viewer = viewer;

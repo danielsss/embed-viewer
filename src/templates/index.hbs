@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <style>
         .uk-container {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .uk-card-default {
@@ -39,7 +39,9 @@
 
 <div class="uk-section">
     <div class="uk-container">
-        <h3><a id="home" onclick="onClickTop()" class="uk-link-heading" href="#">Top</a></h3>
+        <button id="home" class="uk-button uk-button-default uk-button-small" onclick="onClickTop()">
+            <span class="uk-icon" uk-icon="icon: home"></span>
+        </button>
     </div>
     <div class="uk-container">
         <hr>
@@ -56,15 +58,10 @@
     };
 
     const onClickTop = function() {
-      setLink('Top');
       state.child = {};
       render();
     }
 
-    const setLink = function(str) {
-      const home = document.getElementById('home');
-      home.textContent = str;
-    }
 
     const createFile = function(data) {
         const div = document.createElement('div');
@@ -100,9 +97,7 @@
 
         a.href = '#';
         a.onclick = () => {
-            console.info('===========', state.child[data.name])
             render(state.child[data.name]);
-            setLink('Back To Top')
         };
         a.append(`Folder: ${data.name}`);
         a.className = 'uk-link-muted .uk-text-truncate';
