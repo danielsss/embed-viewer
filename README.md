@@ -9,7 +9,7 @@ you will receive a lot of `html` pages which `Github Pages` are going to deploy.
 
 # Example Demo
 
-[Github Pages Examples](https://danielsss.github.io/embed-viewer)
+* [Github Pages Examples](https://danielsss.github.io/embed-viewer)
 
 # Install
 
