@@ -2,6 +2,8 @@
 
 import * as path from 'path';
 import * as Debug from 'debug';
+import * as chalk from 'chalk';
+
 import Input from '../input';
 import Output from '../output';
 import { Command } from 'commander';
@@ -84,6 +86,6 @@ if (Array.isArray(files) && files.length > 0) {
   }
 
 } else {
-  debug('Not found any maps.')
+  console.info('> %s', chalk.green('No detected maps'))
   process.exit(0);
 }
