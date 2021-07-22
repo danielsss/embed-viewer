@@ -23,7 +23,6 @@ class Input {
     }
     this.options.excludes = this.options.excludes ? this.options.excludes : [ 'node_modules' ];
     debug('Input options: %j', this.options);
-    // this.files = this.loadFiles();
     this.struct = this.deconstruct();
     debug('loaded: %j', this.struct);
   }
