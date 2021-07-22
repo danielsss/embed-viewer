@@ -32,7 +32,8 @@ describe('Input Unit Test', function () {
     expect(options.excludes).to.include('node_modules');
     const files = input.getLoadedFiles();
     expect(files).to.be.an('array');
-
+    const structs = input.getStruct();
+    expect(structs).to.be.an('array');
     for (const file of files) {
       expect(fs.existsSync(path.join(source, file.relative))).to.be.true;
     }

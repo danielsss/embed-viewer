@@ -56,9 +56,9 @@ describe('Output Unit Test', function () {
   });
 
   it('should compile and output js script', done => {
-    output.createScript(false);
+    output.createScript();
     expect(fs.readdirSync(options.target)).to.include('embed-viewer.js');
-    output.createScript(false);
+    output.createScript();
     done();
   });
 });

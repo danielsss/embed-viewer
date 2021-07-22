@@ -76,7 +76,8 @@ if (Array.isArray(files) && files.length > 0) {
     }
     output.compileIndex();
     output.compile();
-    output.createScript(true);
+    output.createScript();
+    process.exit(0);
   } catch (err) {
     debug('Occurs Unhandled Error');
     debug(err);

@@ -63,7 +63,7 @@ class Input {
         }
         const hash = utils.hash(dirent.name)
         values.push({isDir: false, isInclude: true, name: dirent.name, hash});
-        this.files.push({relative: path.join(sub || '', `/${dirent.name}`), hash});
+        this.files.push({relative: path.join(sub, `/${dirent.name}`), hash});
       }
     }
     return values;

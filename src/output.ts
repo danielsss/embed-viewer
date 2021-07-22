@@ -71,28 +71,15 @@ class Output {
     console.info('> %s', chalk.green('index.html'));
   }
 
-  public createScript(exit: boolean = false) {
+  public createScript() {
     const dest = path.join(this.target, '/embed-viewer.js');
     if (fs.existsSync(dest)) {
       debug('skip to create script %s', dest);
       return null;
     }
     debug('prepare to create %s into destination %s', SCRIPT_TEMPLATE, dest);
-    const finish = () => {
-      debug('script %s created', dest);
-      console.info('> %s', chalk.green(utils.file.name.extra(SCRIPT_TEMPLATE)));
-      exit && process.exit(0);
-    }
-    const error = err => {
-      /* istanbul ignore next */
-      debug('creat script %s error \n%o', dest, err);
-      /* istanbul ignore next */
-      exit && process.exit(1);
-    }
-    fs.createReadStream(SCRIPT_TEMPLATE)
-      .pipe(fs.createWriteStream(dest))
-      .on('finish', finish)
-      .on('error', error);
+    fs.writeFileSync(dest, fs.readFileSync(SCRIPT_TEMPLATE));
+    console.info('> %s', chalk.green(utils.file.name.extra(SCRIPT_TEMPLATE)));
   }
 }
 
