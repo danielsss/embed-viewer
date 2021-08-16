@@ -113,3 +113,5 @@ fixtures
 .output
 
 *.xmind
+
+.nvmrc
