@@ -5,8 +5,8 @@
 # embed-viewer
 
 The `embed-viewer` is used for converting XMind file to html and viewing pages via GitHub.
-It will scan the file of XMind type from your local `Git Repository` automatically. After that, 
-you will receive a lot of `html` pages which `Github Pages` are going to deploy.
+It will scan all the `*.xmind` file from your local `Git Repository` automatically. After that, 
+the original file will be compiled as a format in `html` and then, you can deploy the `Pages` via `Github`.
 
 # Requirements
 
@@ -22,7 +22,7 @@ you will receive a lot of `html` pages which `Github Pages` are going to deploy.
 
 # Example
 
-* [Github Page Example](https://danielsss.github.io/embed-viewer)
+* [Github Page](https://danielsss.github.io/embed-viewer)
 
 # Install
 
@@ -55,9 +55,9 @@ viewer -i . -o ./docs -p -e dist,src -t MyTitle -l https://logo.com/logo.svg
 
 3. Click `Pages`.
 
-4. Select the `branch` and the `folder` that pages are stored.
+4. Select the `branch` name and the `folder` name.
 
-> If all operations are done, then you can access your `GitHub Pages`.
+> You can access your `GitHub Pages` after all the operations.
 
 # More Information
 
