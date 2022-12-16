@@ -113,3 +113,5 @@ fixtures
 .output
 
 *.xmind
+
+.DS_Store
