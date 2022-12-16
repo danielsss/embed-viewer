@@ -69,12 +69,12 @@ Usage: viewer -i . -o ./docs/pages -f -e node_modules,src,...
 This tool is used for converting "*.xmind" file to Gitlab pages
 
 Options:
-  -t, --title <value>     Specify the page title (default: "Embed Viewer")
-  -i, --input <value>     The "*.xmind" source folder
-  -o, --output <value>    The output folder where the converted pages are stored
-  -p, --purge             Purge the target folder before output pages
-  -e, --excludes <value>  Specify folder that will excluded during the process of scanning (default: "node_modules")
-  -l, --logo <value>      Specify the logo address
+  -t, --title <value>     specify the page title (default: "Embed Viewer")
+  -i, --input <value>     the "*.xmind" source folder
+  -o, --output <value>    the output folder where the converted pages are stored
+  -p, --purge             purge the target folder before output pages
+  -e, --excludes <value>  specify folder that will excluded during the process of scanning (default: "node_modules")
+  -l, --logo <value>      specify the logo address
   -V, --version           output the version number
   -h, --help              display help for command
 ```

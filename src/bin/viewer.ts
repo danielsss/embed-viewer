@@ -14,12 +14,12 @@ program
   .name('viewer')
   .description('This tool is used for converting "*.xmind" file to Gitlab pages')
   .usage('-i . -o ./docs/pages -f -e node_modules,src,...')
-  .option('-t, --title <value>', 'Specify the page title', 'Embed Viewer')
-  .option('-i, --input <value>', 'The "*.xmind" source folder')
-  .option('-o, --output <value>', 'The output folder where the converted pages are stored')
-  .option('-p, --purge', 'Purge the target folder before output pages')
-  .option('-e, --excludes <value>', 'Specify folder that will excluded during the process of scanning', 'node_modules')
-  .option('-l, --logo <value>', 'Specify the logo address')
+  .option('-t, --title <value>', 'specify the page title', 'Embed Viewer')
+  .option('-i, --input <value>', 'the "*.xmind" source folder')
+  .option('-o, --output <value>', 'the output folder where the converted pages are stored')
+  .option('-p, --purge', 'purge the target folder before output pages')
+  .option('-e, --excludes <value>', 'specify folder that will excluded during the process of scanning', 'node_modules')
+  .option('-l, --logo <value>', 'specify the logo address')
   .version(packages.version)
   .parse();
 
