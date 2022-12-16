@@ -1,19 +1,15 @@
 #!/usr/bin/env node
 
 import * as path from 'path';
-import * as Debug from 'debug';
 import * as chalk from 'chalk';
-
 import Input from '../input';
 import Output from '../output';
 import { Command } from 'commander';
 
 const packages = require('../../package.json');
-
-const debug = Debug('embed:bin:viewer');
+const debug = require('debug')('embed:bin:viewer');
 const program = new Command();
 
-// TODO: implement logo parameter
 program
   .name('viewer')
   .description('This tool is used for converting "*.xmind" file to Gitlab pages')
@@ -59,7 +55,7 @@ const outputOptions = { source, target, files, title: options.title, struct };
 
 if (options.logo && typeof options.logo === 'string') {
   if (!options.logo.startsWith('http://') && !options.logo.startsWith('https://')) {
-    program.addHelpText('afterAll', 'The logo address must starts with "http://" or "https://"');
+    program.addHelpText('afterAll', 'The logo address must start with "http://" or "https://"');
     program.help();
     process.exit(1);
   }
